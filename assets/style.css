@@ -1,0 +1,44 @@
+body {
+    line-height: 2;
+}
+
+#bodyContainer {
+    display: flex;
+}
+
+#gifContainer {
+    width: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#formInput {
+    width: 90%;
+}
+
+#buttonsDiv > button {
+    margin: 10px;
+    background-color: #008CBA;
+    color: white;
+    padding: 5px;
+}
+
+#gifContainer > div {
+    margin: 10px;
+}
+
+#searchContainer {
+    width: 25%;
+    font-size: 20px;
+}
+
+#submitButton {
+    background-color: #008CBA;
+    padding: 15px 32px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+}
