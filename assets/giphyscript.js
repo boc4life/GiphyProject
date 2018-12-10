@@ -2,7 +2,13 @@ var actors = ["Jake Gyllenhaal", "Matt Damon", "Mindy Kaling", "Steve Carell", "
 
 renderButtons();
 
-$(".actor").on("click", function() {
+$("#submitButton").on("click", function() {
+    var newActor = $("#formInput").val();
+    actors.push(newActor);
+    renderButtons();
+})
+
+function displayGifs() {
     $("#gifContainer").empty();
     var selected = $(this).attr("data-name");
     var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=0742OzUohRpoQ5bmUOwg0CMML5V9z1M4&q=" + selected + "&limit=10"
@@ -15,15 +21,31 @@ $(".actor").on("click", function() {
         for (var m = 0; m < response.data.length; m++) {
         var gifDiv = $("<div>");
         var ratingSpan = $("<span>").text("Rating: " + response.data[m].rating);
-        var imageURL = response.data[m].images["480w_still"].url;
+        var imageURL = response.data[m].images.original_still.url;
         var image = $("<img src=" + imageURL + ">");
+        $(image).attr("data-still", imageURL);
+        $(image).attr("data-animate", response.data[m].images.original.url);
+        $(image).attr("data-state", "still");
+        image.addClass("image");
         $(gifDiv).append(ratingSpan);
         $(gifDiv).append("<br>");
         $(gifDiv).append(image);
         $("#gifContainer").append(gifDiv);
         }
     })
-})
+}
+
+function animateOrStop() {
+    var state = $(this).attr("data-state");
+        if (state == "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+    }
+    else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+    }
+}
 
 function renderButtons() {
     $("#buttonsDiv").empty();
@@ -37,3 +59,5 @@ function renderButtons() {
     }
 }
 
+$(document).on("click", ".actor", displayGifs);
+$(document).on("click", ".image", animateOrStop);
